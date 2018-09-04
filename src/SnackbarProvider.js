@@ -13,8 +13,24 @@ class SnackbarProvider extends Component {
 
     constructor(props) {
         super(props);
-        this.state.snacks = props.initialSnacks;
+        this.state = {
+            snacks: props.initialSnacks.map(
+                (snack) => this.buildOpenSnack(snack.variant, snack.message)
+            ),
+        }
     }
+
+    /**
+     * Builds an open snackbar object.
+     */
+    buildOpenSnack = (variant, message) => (
+        {
+            variant,
+            message,
+            open: true,
+            key: new Date().getTime(),
+        }
+    );
 
     /**
      * Adds a new snackbar to the queue to be presented.
@@ -23,12 +39,7 @@ class SnackbarProvider extends Component {
      * @param {string} message - text of the notification
      */
     handlePresentSnackbar = (variant, message) => {
-        this.queue.push({
-            message,
-            variant,
-            open: true,
-            key: new Date().getTime(),
-        });
+        this.queue.push(this.buildOpenSnack(variant, message));
         this.handleDisplaySnack();
     };
 
