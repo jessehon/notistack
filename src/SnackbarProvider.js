@@ -9,11 +9,12 @@ import {
 
 
 class SnackbarProvider extends Component {
-    state = {
-        snacks: [],
-    };
-
     queue = [];
+
+    constructor(props) {
+        super(props);
+        this.state.snacks = props.initialSnacks;
+    }
 
     /**
      * Adds a new snackbar to the queue to be presented.
@@ -103,7 +104,7 @@ class SnackbarProvider extends Component {
     };
 
     render() {
-        const { children, maxSnack, ...props } = this.props;
+        const { children, maxSnack, initialSnacks, ...props } = this.props;
         const { snacks } = this.state;
 
         return (
@@ -133,10 +134,15 @@ SnackbarProvider.propTypes = {
      * on top of one another
      */
     maxSnack: PropTypes.number,
+    /**
+     * Snackbars to be displayed initially
+     */
+    initialSnacks: PropTypes.any,
 };
 
 SnackbarProvider.defaultProps = {
     maxSnack: 3,
+    initialSnacks: [],
 };
 
 export default SnackbarProvider;
