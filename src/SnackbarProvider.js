@@ -148,7 +148,14 @@ SnackbarProvider.propTypes = {
     /**
      * Snackbars to be displayed initially
      */
-    initialSnacks: PropTypes.any,
+    initialSnacks: PropTypes.arrayOf(
+        PropTypes.shape({
+            variant: PropTypes.oneOf(
+                ['error', 'success', 'warning', 'info'],
+            ).isRequired,
+            message: PropTypes.string.isRequired
+        })
+    ),
 };
 
 SnackbarProvider.defaultProps = {
