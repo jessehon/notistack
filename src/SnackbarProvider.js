@@ -9,6 +9,7 @@ import {
 
 
 class SnackbarProvider extends Component {
+    nextSnackKey = 0;
     queue = [];
 
     constructor(props) {
@@ -17,8 +18,12 @@ class SnackbarProvider extends Component {
             snacks: props.initialSnacks.map(
                 (snack) => this.buildOpenSnack(snack.variant, snack.message)
             ),
-        }
+        };
     }
+
+    getNextSnackKey = () => (
+        this.nextSnackKey++
+    )
 
     /**
      * Builds an open snackbar object.
@@ -28,7 +33,7 @@ class SnackbarProvider extends Component {
             variant,
             message,
             open: true,
-            key: new Date().getTime(),
+            key: this.getNextSnackKey(),
         }
     );
 
